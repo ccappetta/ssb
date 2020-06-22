@@ -1,0 +1,22 @@
+DROP procedure if exists proc_createtbl_usage_count_items;
+create procedure proc_createtbl_usage_count_items(IN dbname varchar(128))
+BEGIN
+    SET @theSQL=CONCAT('
+
+
+create table if not exists ', dbname,'.usage_count_items
+(
+	item_id int auto_increment
+		primary key,
+	updated_timestamp timestamp null,
+	item_type varchar(255) null,
+	item_identifier varchar(255) null,
+	item_count int null
+);
+
+
+');
+    PREPARE stmt1 from @theSQL;
+    EXECUTE stmt1;
+    DEALLOCATE PREPARE stmt1;
+END;
